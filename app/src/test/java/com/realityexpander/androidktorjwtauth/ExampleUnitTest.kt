@@ -1,4 +1,4 @@
-package com.plcoding.jwtauthktorandroid
+package com.realityexpander.androidktorjwtauth
 
 import org.junit.Test
 

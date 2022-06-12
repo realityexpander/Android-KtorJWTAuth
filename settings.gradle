@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "JWT Auth Ktor + Android"
+rootProject.name = "Android + Ktor JWT Auth"
 include ':app'

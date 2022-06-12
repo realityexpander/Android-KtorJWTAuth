@@ -1,4 +1,4 @@
-package com.plcoding.jwtauthktorandroid.ui
+package com.realityexpander.androidktorjwtauth.ui
 
 sealed class AuthUiEvent {
     data class SignUpUsernameChanged(val value: String): AuthUiEvent()

@@ -1,4 +1,4 @@
-package com.plcoding.jwtauthktorandroid.ui
+package com.realityexpander.androidktorjwtauth.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +9,8 @@ import androidx.compose.ui.Modifier
 import com.ramcosta.composedestinations.annotation.Destination
 
 @Composable
-fun SecretScreen() {
+@Destination
+fun AuthenticatedScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

@@ -1,4 +1,4 @@
-package com.plcoding.jwtauthktorandroid.ui.theme
+package com.realityexpander.androidktorjwtauth.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
