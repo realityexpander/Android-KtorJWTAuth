@@ -16,6 +16,7 @@
             android:name="com.realityexpander.androidktorjwtauth.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.JWTAuthKtorAndroid">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
