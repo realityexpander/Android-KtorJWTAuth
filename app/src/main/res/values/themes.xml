@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.JWTAuthKtorAndroid" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+    <style name="Theme.JWTAuthKtorAndroid" parent="android:Theme.Material.NoActionBar.TranslucentDecor">
+        <item name="android:statusBarColor">@color/dark_grey</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowBackground">@color/dark_grey</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>
