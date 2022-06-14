@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     color = Color.Black,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                        DestinationsNavHost(navGraph = NavGraphs.root)
+                    DestinationsNavHost(navGraph = NavGraphs.root)
                 }
             }
         }

@@ -18,10 +18,12 @@ class AuthRepositoryImpl(
             // Attempt to get signIn & get token for new user
             signIn(username, password)
         } catch (e: HttpException) {
+            val errmessage = getErrorMessage(e)
+
             if (e.code() == 401) {
                 AuthResult.Unauthorized()
             } else {
-                AuthResult.Error("${e.localizedMessage}: ${e.code()}", e.code())
+                AuthResult.Error("${e.localizedMessage}: ${e.code()}, ${errmessage}", e.code())
             }
         } catch (e: Exception) {
             AuthResult.Error("Unexpected error: ${e.localizedMessage}", -1)

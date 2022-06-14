@@ -37,10 +37,10 @@ class MainViewModel @Inject constructor(
             is AuthUiEvent.SignInPasswordChanged -> {
                 state = state.copy(signInPassword = event.value)
             }
-            is AuthUiEvent.SignUpPasswordChanged -> {
+            is AuthUiEvent.SignUpUsernameChanged -> {
                 state = state.copy(signUpUsername = event.value)
             }
-            is AuthUiEvent.SignUpUsernameChanged -> {
+            is AuthUiEvent.SignUpPasswordChanged -> {
                 state = state.copy(signUpPassword = event.value)
             }
             is AuthUiEvent.SignIn -> {

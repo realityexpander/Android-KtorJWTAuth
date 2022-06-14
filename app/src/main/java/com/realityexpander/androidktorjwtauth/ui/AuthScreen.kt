@@ -136,7 +136,9 @@ fun AuthScreen(
                         requestBringItemIntoView(focusState, 1)
                     },
                 placeholder = {
-                    Text(text = "Password")
+                    Text(text = "Password",
+                        style = MaterialTheme.typography.body1
+                    )
                 }
             )
         }
@@ -166,7 +168,9 @@ fun AuthScreen(
                         requestBringItemIntoView(focusState, 2)
                     },
                 placeholder = {
-                    Text(text = "Username")
+                    Text(text = "Username",
+                        style = MaterialTheme.typography.body1
+                    )
                 }
             )
         }
@@ -186,7 +190,9 @@ fun AuthScreen(
                         requestBringItemIntoView(focusState, 3)
                     },
                 placeholder = {
-                    Text(text = "Password")
+                    Text(text = "Password",
+                        style = MaterialTheme.typography.body1
+                    )
                 }
             )
         }

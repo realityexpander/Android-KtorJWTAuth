@@ -24,7 +24,8 @@ object AppModule {
     @Singleton
     fun provideAuthApi(): AuthApi {
         return Retrofit.Builder()
-            .baseUrl("https://localhost:8080/") // use local ip, 192.168.0.186
+//            .baseUrl("https://localhost:8080/") // use local ip, 192.168.0.186
+            .baseUrl("https://a44d-187-225-129-71.ngrok.io/") // use ngrok
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create()
