@@ -1,4 +1,4 @@
-package com.realityexpander.androidktorjwtauth.ui
+package com.realityexpander.androidktorjwtauth.ui.login
 
 data class AuthState(
     val isLoading: Boolean = false,

@@ -1,4 +1,4 @@
-package com.realityexpander.androidktorjwtauth.ui
+package com.realityexpander.androidktorjwtauth.ui.login
 
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -28,7 +28,6 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.realityexpander.androidktorjwtauth.auth.AuthResult
 import com.realityexpander.androidktorjwtauth.ui.destinations.AuthScreenDestination
 import com.realityexpander.androidktorjwtauth.ui.destinations.AuthenticatedScreenDestination
-import com.realityexpander.androidktorjwtauth.ui.theme.TextWhite
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -154,7 +153,11 @@ fun AuthScreen(
             viewIndex = ViewIndex.SIGNUP_USERNAME,
             value = state.signUpUsername,
             placeholderText = "Username",
-            onValueChange = { newValue -> viewModel.onEvent(AuthUiEvent.SignUpUsernameChanged(newValue)) }
+            onValueChange = { newValue -> viewModel.onEvent(
+                AuthUiEvent.SignUpUsernameChanged(
+                    newValue
+                )
+            ) }
         )
         TextEntryItem(
             viewIndex = ViewIndex.SIGNUP_EMAIL,
@@ -166,7 +169,11 @@ fun AuthScreen(
             viewIndex = ViewIndex.SIGNUP_PASSWORD,
             value = state.signUpPassword,
             placeholderText = "Password",
-            onValueChange = { newValue -> viewModel.onEvent(AuthUiEvent.SignUpPasswordChanged(newValue)) }
+            onValueChange = { newValue -> viewModel.onEvent(
+                AuthUiEvent.SignUpPasswordChanged(
+                    newValue
+                )
+            ) }
         )
         Button(
             onClick = {
@@ -183,7 +190,11 @@ fun AuthScreen(
             viewIndex = ViewIndex.SIGNIN_USERNAME,
             value = state.signInUsername,
             placeholderText = "Username",
-            onValueChange = { newValue -> viewModel.onEvent(AuthUiEvent.SignInUsernameChanged(newValue)) }
+            onValueChange = { newValue -> viewModel.onEvent(
+                AuthUiEvent.SignInUsernameChanged(
+                    newValue
+                )
+            ) }
         )
         TextEntryItem(
             viewIndex = ViewIndex.SIGNIN_EMAIL,
@@ -195,7 +206,11 @@ fun AuthScreen(
             viewIndex = ViewIndex.SIGNIN_PASSWORD,
             value = state.signInPassword,
             placeholderText = "Password",
-            onValueChange = { newValue -> viewModel.onEvent(AuthUiEvent.SignInPasswordChanged(newValue)) }
+            onValueChange = { newValue -> viewModel.onEvent(
+                AuthUiEvent.SignInPasswordChanged(
+                    newValue
+                )
+            ) }
         )
         Button(
             onClick = {

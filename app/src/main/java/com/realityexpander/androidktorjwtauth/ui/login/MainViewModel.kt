@@ -1,6 +1,5 @@
-package com.realityexpander.androidktorjwtauth.ui
+package com.realityexpander.androidktorjwtauth.ui.login
 
-import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,7 +9,6 @@ import com.realityexpander.androidktorjwtauth.auth.AuthRepository
 import com.realityexpander.androidktorjwtauth.auth.AuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
