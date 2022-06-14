@@ -14,7 +14,7 @@ private val DarkColorPalette = darkColors(
     background = DarkGray,
     primaryVariant = Purple700,
     secondary = Teal200,
-    onBackground = TextWhite,
+    onBackground = DarkGray,
     onPrimary = DarkGray
 )
 
@@ -64,7 +64,7 @@ fun AndroidKtorJWTAuthTheme(
         content = {
             if (darkTheme) {
                 ProvideTextStyle(
-                    value = TextStyle(color = Color.White),
+                    value = TextStyle(color = TextWhite),
                     content = content
                 )
             } else {

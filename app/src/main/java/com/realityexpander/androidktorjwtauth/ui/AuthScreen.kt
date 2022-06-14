@@ -6,17 +6,21 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -24,6 +28,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.realityexpander.androidktorjwtauth.auth.AuthResult
 import com.realityexpander.androidktorjwtauth.ui.destinations.AuthScreenDestination
 import com.realityexpander.androidktorjwtauth.ui.destinations.AuthenticatedScreenDestination
+import com.realityexpander.androidktorjwtauth.ui.theme.TextWhite
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -47,16 +52,18 @@ fun AuthScreen(
     val state = viewModel.state
     val context = LocalContext.current
 
-    val focusManager = LocalFocusManager.current
     val coroutineScope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    // Setup views to scroll to upon focus
     val bringIntoViewRequesters = mutableListOf<BringIntoViewRequester>()
     repeat(ViewIndex.values().size) {
         bringIntoViewRequesters += remember { BringIntoViewRequester() }
     }
     val signInButtonViewRequester = remember { BringIntoViewRequester() }
 
+    // Respond to responses from the view model
     LaunchedEffect(viewModel, context) {
         viewModel.authResults.collect { result ->
             when (result) {
@@ -64,6 +71,8 @@ fun AuthScreen(
                     Toast.makeText(context, "Success. " + result.data, Toast.LENGTH_LONG).show()
                 }
                 is AuthResult.Authorized -> {
+                    Toast.makeText(context, "Authorized. " + result.data, Toast.LENGTH_LONG).show()
+
                     navigator.navigate(AuthenticatedScreenDestination) {
                         popUpTo(AuthScreenDestination.route) {
                             inclusive = true // disables back button going to the previous screen
@@ -115,10 +124,14 @@ fun AuthScreen(
                     .onFocusEvent { focusState ->
                         requestBringItemIntoView(focusState, viewIndex.index)
                     },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.moveFocus(FocusDirection.Down) }),
                 placeholder = {
                     Text(
                         text = placeholderText,
-                        style = MaterialTheme.typography.body1
+                        style = MaterialTheme.typography.body1,
+                        color = MaterialTheme.colors.primary
                     )
                 }
             )
@@ -143,95 +156,25 @@ fun AuthScreen(
             placeholderText = "Username",
             onValueChange = { newValue -> viewModel.onEvent(AuthUiEvent.SignUpUsernameChanged(newValue)) }
         )
-
-//        Row(
-//            modifier = Modifier
-//                .bringIntoViewRequester(bringIntoViewRequesters[viewIdx.SIGNUP_USERNAME.index]),
-//        ) {
-//            TextField(
-//                value = state.signUpUsername,
-//                onValueChange = {
-//                    viewModel.onEvent(AuthUiEvent.SignUpUsernameChanged(it))
-//                },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .onFocusEvent { focusState ->
-//                        requestBringItemIntoView(focusState, viewIdx.SIGNUP_USERNAME.index)
-//                    },
-//                placeholder = {
-//                    Text(
-//                        text = "Username",
-//                        style = MaterialTheme.typography.body1
-//                    )
-//                }
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
-
         TextEntryItem(
             viewIndex = ViewIndex.SIGNUP_EMAIL,
             value = state.signUpEmail,
             placeholderText = "Email",
             onValueChange = { newValue -> viewModel.onEvent(AuthUiEvent.SignUpEmailChanged(newValue)) }
         )
-//        Row(
-//            modifier = Modifier
-//                .bringIntoViewRequester(bringIntoViewRequesters[viewIdx.SIGNUP_EMAIL.index]),
-//        ) {
-//            TextField(
-//                value = state.signUpEmail,
-//                onValueChange = {
-//                    viewModel.onEvent(AuthUiEvent.SignUpEmailChanged(it))
-//                },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .onFocusEvent { focusState ->
-//                        requestBringItemIntoView(focusState, viewIdx.SIGNUP_EMAIL.index)
-//                    },
-//                placeholder = {
-//                    Text(
-//                        text = "Email",
-//                        style = MaterialTheme.typography.body1
-//                    )
-//                }
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
-
         TextEntryItem(
             viewIndex = ViewIndex.SIGNUP_PASSWORD,
             value = state.signUpPassword,
             placeholderText = "Password",
             onValueChange = { newValue -> viewModel.onEvent(AuthUiEvent.SignUpPasswordChanged(newValue)) }
         )
-//        Row(
-//            modifier = Modifier
-//                .bringIntoViewRequester(bringIntoViewRequesters[viewIdx.SIGNUP_PASSWORD.index]),
-//        ) {
-//            TextField(
-//                value = state.signUpPassword,
-//                onValueChange = {
-//                    viewModel.onEvent(AuthUiEvent.SignUpPasswordChanged(it))
-//                },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .onFocusEvent { focusState ->
-//                        requestBringItemIntoView(focusState, viewIdx.SIGNUP_PASSWORD.index)
-//                    },
-//                placeholder = {
-//                    Text(text = "Password",
-//                        style = MaterialTheme.typography.body1
-//                    )
-//                }
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
                 viewModel.onEvent(AuthUiEvent.SignUp)
             },
         ) {
-            Text(text = "Sign up")
+            Text(text = "Sign up"
+                , color = MaterialTheme.colors.onPrimary)
         }
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -242,87 +185,18 @@ fun AuthScreen(
             placeholderText = "Username",
             onValueChange = { newValue -> viewModel.onEvent(AuthUiEvent.SignInUsernameChanged(newValue)) }
         )
-//        Row(
-//            modifier = Modifier
-//                .bringIntoViewRequester(bringIntoViewRequesters[ViewIndex.SIGNIN_USERNAME.index]),
-//        ) {
-//            TextField(
-//                value = state.signInUsername,
-//                onValueChange = {
-//                    viewModel.onEvent(AuthUiEvent.SignInUsernameChanged(it))
-//                },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .onFocusEvent { focusState ->
-//                        requestBringItemIntoView(focusState, ViewIndex.SIGNIN_USERNAME.index)
-//                    },
-//                placeholder = {
-//                    Text(text = "Username",
-//                        style = MaterialTheme.typography.body1
-//                    )
-//                }
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
-
         TextEntryItem(
             viewIndex = ViewIndex.SIGNIN_EMAIL,
             value = state.signInEmail,
             placeholderText = "Email",
             onValueChange = { newValue -> viewModel.onEvent(AuthUiEvent.SignInEmailChanged(newValue)) }
         )
-//        Row(
-//            modifier = Modifier
-//                .bringIntoViewRequester(bringIntoViewRequesters[ViewIndex.SIGNIN_EMAIL.index]),
-//        ) {
-//            TextField(
-//                value = state.signInEmail,
-//                onValueChange = {
-//                    viewModel.onEvent(AuthUiEvent.SignInEmailChanged(it))
-//                },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .onFocusEvent { focusState ->
-//                        requestBringItemIntoView(focusState, ViewIndex.SIGNIN_EMAIL.index)
-//                    },
-//                placeholder = {
-//                    Text(
-//                        text = "Email",
-//                        style = MaterialTheme.typography.body1
-//                    )
-//                }
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
-
         TextEntryItem(
             viewIndex = ViewIndex.SIGNIN_PASSWORD,
             value = state.signInPassword,
-            placeholderText = "Email",
+            placeholderText = "Password",
             onValueChange = { newValue -> viewModel.onEvent(AuthUiEvent.SignInPasswordChanged(newValue)) }
         )
-//        Row(
-//            modifier = Modifier
-//                .bringIntoViewRequester(bringIntoViewRequesters[ViewIndex.SIGNIN_PASSWORD.index]),
-//        ) {
-//            TextField(
-//                value = state.signInPassword,
-//                onValueChange = {
-//                    viewModel.onEvent(AuthUiEvent.SignInPasswordChanged(it))
-//                },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .onFocusEvent { focusState ->
-//                        requestBringItemIntoView(focusState, ViewIndex.SIGNIN_PASSWORD.index)
-//                    },
-//                placeholder = {
-//                    Text(text = "Password",
-//                        style = MaterialTheme.typography.body1
-//                    )
-//                }
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
                 viewModel.onEvent(AuthUiEvent.SignIn)
@@ -330,7 +204,8 @@ fun AuthScreen(
             modifier = Modifier
                 .bringIntoViewRequester(signInButtonViewRequester),
         ) {
-            Text(text = "Sign in")
+            Text(text = "Sign in",
+                color = MaterialTheme.colors.onPrimary)
 
         }
     }

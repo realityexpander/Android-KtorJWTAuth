@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
 
     var state by mutableStateOf(AuthState())
 
-    private val resultChannel = Channel<AuthResult<Unit>>()
+    private val resultChannel = Channel<AuthResult<String>>()
     val authResults = resultChannel.receiveAsFlow()
 
     init {
@@ -35,7 +35,7 @@ class MainViewModel @Inject constructor(
                 state = state.copy(signUpUsername = event.value)
             }
             is AuthUiEvent.SignUpEmailChanged -> {
-                state = state.copy(signInEmail = event.value)
+                state = state.copy(signUpEmail = event.value)
             }
             is AuthUiEvent.SignUpPasswordChanged -> {
                 state = state.copy(signUpPassword = event.value)
@@ -64,7 +64,8 @@ class MainViewModel @Inject constructor(
 
             val result = repo.signUp(
                 state.signUpUsername,
-                state.signUpPassword
+                state.signUpPassword,
+                state.signUpEmail
             )
             resultChannel.send(result)
 
@@ -78,7 +79,8 @@ class MainViewModel @Inject constructor(
 
             val result = repo.signIn(
                 state.signInUsername,
-                state.signInPassword
+                state.signInPassword,
+                state.signInEmail
             )
             resultChannel.send(result)
 

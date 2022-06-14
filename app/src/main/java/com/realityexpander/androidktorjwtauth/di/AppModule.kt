@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import com.realityexpander.androidktorjwtauth.auth.AuthApi
 import com.realityexpander.androidktorjwtauth.auth.AuthRepository
 import com.realityexpander.androidktorjwtauth.auth.AuthRepositoryImpl
+import com.squareup.moshi.JsonReader
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,8 +27,12 @@ object AppModule {
     fun provideAuthApi(): AuthApi {
         return Retrofit.Builder()
 //            .baseUrl("https://localhost:8080/") // use local ip, 192.168.0.186
-            .baseUrl("https://a44d-187-225-129-71.ngrok.io/") // use ngrok
-            .addConverterFactory(MoshiConverterFactory.create())
+            .baseUrl("https://bc46-187-225-129-71.ngrok.io/") // use ngrok
+            .addConverterFactory(
+                MoshiConverterFactory.create()
+                    .asLenient()
+                    .withNullSerialization()
+            )
             .build()
             .create()
     }
