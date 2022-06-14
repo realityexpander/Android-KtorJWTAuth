@@ -31,17 +31,23 @@ class MainViewModel @Inject constructor(
 
     fun onEvent(event: AuthUiEvent) {
         when(event) {
-            is AuthUiEvent.SignInUsernameChanged -> {
-                state = state.copy(signInUsername = event.value)
-            }
-            is AuthUiEvent.SignInPasswordChanged -> {
-                state = state.copy(signInPassword = event.value)
-            }
             is AuthUiEvent.SignUpUsernameChanged -> {
                 state = state.copy(signUpUsername = event.value)
             }
+            is AuthUiEvent.SignUpEmailChanged -> {
+                state = state.copy(signInEmail = event.value)
+            }
             is AuthUiEvent.SignUpPasswordChanged -> {
                 state = state.copy(signUpPassword = event.value)
+            }
+            is AuthUiEvent.SignInUsernameChanged -> {
+                state = state.copy(signInUsername = event.value)
+            }
+            is AuthUiEvent.SignInEmailChanged -> {
+                state = state.copy(signInEmail = event.value)
+            }
+            is AuthUiEvent.SignInPasswordChanged -> {
+                state = state.copy(signInPassword = event.value)
             }
             is AuthUiEvent.SignIn -> {
                 signIn()
