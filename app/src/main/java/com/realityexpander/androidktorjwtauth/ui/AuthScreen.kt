@@ -87,7 +87,7 @@ fun AuthScreen(
         if (focusState.isFocused) {
             coroutineScope.launch {
                 delay(300)
-                if (viewItem >= 2) {
+                if (viewItem >= ViewIndex.SIGNIN_USERNAME.index) {
                     signInButtonViewRequester.bringIntoView()
                 } else {
                     bringIntoViewRequesters[viewItem].bringIntoView()
@@ -113,7 +113,7 @@ fun AuthScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .onFocusEvent { focusState ->
-                        requestBringItemIntoView(focusState, viewIndex)
+                        requestBringItemIntoView(focusState, viewIndex.index)
                     },
                 placeholder = {
                     Text(
