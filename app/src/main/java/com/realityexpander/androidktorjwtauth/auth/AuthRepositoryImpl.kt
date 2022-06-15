@@ -1,6 +1,7 @@
 package com.realityexpander.androidktorjwtauth.auth
 
 import android.content.SharedPreferences
+import org.apache.commons.codec.digest.DigestUtils
 import retrofit2.HttpException
 
 class AuthRepositoryImpl(
@@ -11,7 +12,10 @@ class AuthRepositoryImpl(
         return try {
             // Attempt to sign up
             val response = authApi.signUp(
-                AuthRequest(username, password, email)
+                AuthRequest(
+                    username,
+                    DigestUtils.sha256Hex(password), // dont send the password, just the hash
+                    email)
             )
             println("AuthRepositoryImpl#signUp: ${response.string()}") // debugging
 
@@ -32,7 +36,10 @@ class AuthRepositoryImpl(
         return try {
             // Attempt to sign in
             val response = authApi.signIn(
-                AuthRequest(username, password, email)
+                AuthRequest(
+                    username,
+                    DigestUtils.sha256Hex(password), // dont send the password, just the hash
+                    email)
             )
             println("AuthRepositoryImpl#signIn: $response") // debugging
 
