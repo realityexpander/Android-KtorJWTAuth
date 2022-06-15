@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.realityexpander.androidktorjwtauth.auth.AuthRepository
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthenticatedViewModel @Inject constructor(
     private val repo: AuthRepository, // uses interface
-    private val prefs: SharedPreferences
+    private val prefs: SharedPreferences,
+    private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
     var state by mutableStateOf(AuthState())
@@ -28,6 +30,8 @@ class AuthenticatedViewModel @Inject constructor(
     val authResults = resultChannel.receiveAsFlow()
 
     init {
+        val username = savedStateHandle.get<String>("signInUsername") ?: "User not given"
+        state = state.copy(signInUsername = username)
     }
 
     fun onEvent(event: AuthenticatedUiEvent) {

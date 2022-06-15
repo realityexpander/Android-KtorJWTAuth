@@ -26,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.realityexpander.androidktorjwtauth.auth.AuthResult
+import com.realityexpander.androidktorjwtauth.auth.TokenResponse
 import com.realityexpander.androidktorjwtauth.ui.destinations.AuthScreenDestination
 import com.realityexpander.androidktorjwtauth.ui.destinations.AuthenticatedScreenDestination
 import kotlinx.coroutines.delay
@@ -72,7 +73,9 @@ fun AuthScreen(
                 is AuthResult.Authorized -> {
                     Toast.makeText(context, "Authorized. " + result.data, Toast.LENGTH_LONG).show()
 
-                    navigator.navigate(AuthenticatedScreenDestination) {
+                    navigator.navigate(AuthenticatedScreenDestination(
+                        signInUsername = result.data ?: "Username not sent."
+                    )) {
                         popUpTo(AuthScreenDestination.route) {
                             inclusive = true // disables back button going to the previous screen
                         }

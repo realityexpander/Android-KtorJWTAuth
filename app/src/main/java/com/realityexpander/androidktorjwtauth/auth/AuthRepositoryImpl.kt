@@ -14,7 +14,7 @@ class AuthRepositoryImpl(
             val response = authApi.signUp(
                 AuthRequest(
                     username,
-                    DigestUtils.sha256Hex(password), // dont send the password, just the hash
+                    DigestUtils.sha256Hex(password), // don't send the password, just the hash
                     email)
             )
             println("AuthRepositoryImpl#signUp: ${response.string()}") // debugging
@@ -38,7 +38,7 @@ class AuthRepositoryImpl(
             val response = authApi.signIn(
                 AuthRequest(
                     username,
-                    DigestUtils.sha256Hex(password), // dont send the password, just the hash
+                    DigestUtils.sha256Hex(password), // don't send the password, just the hash
                     email)
             )
             println("AuthRepositoryImpl#signIn: $response") // debugging

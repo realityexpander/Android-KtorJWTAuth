@@ -25,8 +25,10 @@ import com.realityexpander.androidktorjwtauth.ui.destinations.AuthenticatedScree
 fun AuthenticatedScreen(
     navigator: DestinationsNavigator, // must be first parameter
     viewModel: AuthenticatedViewModel = hiltViewModel(),
+    signInUsername : String,
 ) {
     val context = LocalContext.current
+    val state = viewModel.state
 
     // Respond to responses from the view model
     LaunchedEffect(viewModel, context) {
@@ -50,7 +52,7 @@ fun AuthenticatedScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Text(text = "You're authenticated!")
+        Text(text = "You're authenticated as ${state.signInUsername}")
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
